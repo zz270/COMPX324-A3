@@ -27,3 +27,12 @@ def format_request(request_line):
         return None
 
     return f"{message_size:03d} {command[0]} {key} {value}"
+
+if __name__ == "__main__":
+    if len(sys.argv) != 4:
+        print("Usage: python client.py <server_host> <server_port> <request_file_path>")
+        sys.exit(1)
+    server_host = sys.argv[1]
+    server_port = int(sys.argv[2])
+    request_file_path = sys.argv[3]
+    send_requests(server_host, server_port, request_file_path)
