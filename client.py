@@ -22,4 +22,8 @@ def format_request(request_line):
     value = ' '.join(parts[2:]) if len(parts) > 2 else ''
 
     message_size = 7 + len(key) + len(value)
-    
+    if message_size > 999:
+        print(f"Request size exceeds limit: {request_line}")
+        return None
+
+    return f"{message_size:03d} {command[0]} {key} {value}"
