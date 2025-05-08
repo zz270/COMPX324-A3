@@ -23,7 +23,7 @@ def process_request(request):
     key = request[5:request.find(' ') if ' ' in request else len(request)]
     value = request[request.find(' ') + 1:] if ' ' in request else ''
 
-     if command == 'R':
+    if command == 'R':
         return read(key)
     elif command == 'G':
         return get(key)
