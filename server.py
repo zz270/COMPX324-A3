@@ -22,3 +22,13 @@ def process_request(request):
     command = request[3]
     key = request[5:request.find(' ') if ' ' in request else len(request)]
     value = request[request.find(' ') + 1:] if ' ' in request else ''
+
+     if command == 'R':
+        return read(key)
+    elif command == 'G':
+        return get(key)
+    elif command == 'P':
+        return put(key, value)
+    else:
+        operation_counts["ERR"] += 1
+        return "024 ERR invalid command"
