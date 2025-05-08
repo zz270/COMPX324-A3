@@ -107,3 +107,13 @@ def start_server(port):
             client_count += 1
             client_thread = threading.Thread(target=handle_client, args=(client_socket,))
             client_thread.start()
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) != 2:
+        print("Usage: python server.py <port>")
+        sys.exit(1)
+    port = int(sys.argv[1])
+    start_server(port)
+
