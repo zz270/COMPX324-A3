@@ -88,3 +88,22 @@ def print_summary():
         print(f"Total GETs: {operation_counts['G']}")
         print(f"Total PUTs: {operation_counts['P']}")
         print(f"Total errors: {operation_counts['ERR']}")
+
+    
+def start_server(port):
+    global client_count
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+        server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        server_socket.bind(('0.0.0.0', port))
+        server_socket.listen()
+        print(f"Server started on port {port}")
+
+        summary_thread = threading.Thread(target=print_summary)
+        summary_thread.daemon = True
+        summary_thread.start()
+
+        while True:
+            client_socket, _ = server_socket.accept()
+            client_count += 1
+            client_thread = threading.Thread(target=handle_client, args=(client_socket,))
+            client_thread.start()
