@@ -43,3 +43,26 @@ def read(key):
         operation_counts["ERR"] += 1
         error_counts["R"] += 1
         return "024 ERR k does not exist" 
+
+def get(key):
+    global operation_counts, error_counts
+    value = tuple_space.pop(key, None)
+    if value:
+        response_size = 12 + len(key) + len(value)
+        return f"0{response_size:02d} OK ({key}, {value}) removed"
+    else:
+        operation_counts["ERR"] += 1
+        error_counts["G"] += 1
+        return "024 ERR k does not exist"
+
+
+def put(key, value):
+    global operation_counts, error_counts
+    if key in tuple_space:
+        operation_counts["ERR"] += 1
+        error_counts["P"] += 1
+        return "024 ERR k already exists"
+    else:
+        tuple_space[key] = value
+        response_size = 11 + len(key) + len(value)
+        return f"0{response_size:02d} OK ({key}, {value}) added"
