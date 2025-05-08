@@ -69,3 +69,22 @@ def put(key, value):
     
 def print_summary():
     global tuple_space, operation_counts, error_counts, client_count
+    while True:
+        time.sleep(10)
+        tuple_count = len(tuple_space)
+        total_tuple_size = sum(len(key) + len(value) for key, value in tuple_space.items())
+        average_tuple_size = total_tuple_size / tuple_count if tuple_count > 0 else 0
+        average_key_size = sum(len(key) for key in tuple_space.keys()) / tuple_count if tuple_count > 0 else 0
+        average_value_size = sum(len(value) for value in tuple_space.values()) / tuple_count if tuple_count > 0 else 0
+
+        print(f"Tuple space summary:")
+        print(f"Number of tuples: {tuple_count}")
+        print(f"Average tuple size: {average_tuple_size}")
+        print(f"Average key size: {average_key_size}")
+        print(f"Average value size: {average_value_size}")
+        print(f"Total number of clients: {client_count}")
+        print(f"Total number of operations: {sum(operation_counts.values())}")
+        print(f"Total READs: {operation_counts['R']}")
+        print(f"Total GETs: {operation_counts['G']}")
+        print(f"Total PUTs: {operation_counts['P']}")
+        print(f"Total errors: {operation_counts['ERR']}")
