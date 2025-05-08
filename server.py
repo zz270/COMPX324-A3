@@ -32,3 +32,14 @@ def process_request(request):
     else:
         operation_counts["ERR"] += 1
         return "024 ERR invalid command"
+
+def read(key):
+    global operation_counts, error_counts
+    value = tuple_space.get(key)
+    if value:
+        response_size = 11 + len(key) + len(value)
+        return f"0{response_size:02d} OK ({key}, {value}) read"
+    else:
+        operation_counts["ERR"] += 1
+        error_counts["R"] += 1
+        return "024 ERR k does not exist" 
