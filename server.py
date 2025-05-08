@@ -66,3 +66,6 @@ def put(key, value):
         tuple_space[key] = value
         response_size = 11 + len(key) + len(value)
         return f"0{response_size:02d} OK ({key}, {value}) added"
+    
+def print_summary():
+    global tuple_space, operation_counts, error_counts, client_count
